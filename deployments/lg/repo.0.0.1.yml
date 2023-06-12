@@ -1,0 +1,16 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - origins:
+        - resolved:
+            tag: 0.0.1
+            url: localhost:5001/gitopscon/lg-pkg-repo:0.0.1
+        url: localhost:5001/gitopscon/lg-pkg-repo@sha256:baee9180677ae033f72291acb015be42811b8612f33a814d43891578c11a6ff3
+  name: lg-pkg-repo
+spec:
+  fetch:
+    imgpkgBundle:
+      image: localhost:5001/gitopscon/lg-pkg-repo@sha256:baee9180677ae033f72291acb015be42811b8612f33a814d43891578c11a6ff3

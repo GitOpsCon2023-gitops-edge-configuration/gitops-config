@@ -1,0 +1,89 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: lg-hello-app.corp.com.1.0.0
+spec:
+  refName: lg-hello-app.corp.com
+  version: 1.0.0
+  releaseNotes: |
+    Initial release of the app package
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              default: hello-app
+            owner:
+              nullable: true
+              description: Set to null to omit Namespace resource
+              default: null
+        helloApp:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              default: hello-app
+            message:
+              type: string
+              description: Name used in hello message from app when app is pinged.
+              default: default
+            memRequest:
+              type: string
+              default: 128Mi
+            cpuRequest:
+              type: string
+              default: 500m
+            memLimit:
+              type: string
+              default: 256Mi
+            cpuLimit:
+              type: string
+              default: 1000m
+            ingress:
+              type: object
+              additionalProperties: false
+              description: Set hostname and domain to null to omit Ingress resource
+              properties:
+                hostname:
+                  nullable: true
+                  default: null
+                domain:
+                  nullable: true
+                  default: null
+                class:
+                  nullable: true
+                  default: null
+                secret:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    certificate:
+                      nullable: true
+                      default: null
+                    privateKey:
+                      nullable: true
+                      default: null
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: localhost:5001/gitopscon/lg-hello-app-bundle:1.0.0
+      template:
+      - ytt:
+          paths:
+          - config/
+          - overlay/
+          - values/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}

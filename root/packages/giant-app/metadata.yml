@@ -1,0 +1,10 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: lg-giant-app.corp.com
+spec:
+  displayName: giant-app App
+  longDescription: giant-app app for demoing
+  shortDescription: giant-app app for deployment to Kubernetes
+  categories:
+  - demo

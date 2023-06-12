@@ -1,0 +1,16 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - origins:
+        - resolved:
+            tag: 0.1.2
+            url: localhost:5001/gitopscon/sm-pkg-repo:0.1.2
+        url: localhost:5001/gitopscon/sm-pkg-repo@sha256:675088d231092ef11c63d29f308d517da7eb549e58829215c171276db5f0a898
+  name: sm-pkg-repo
+spec:
+  fetch:
+    imgpkgBundle:
+      image: localhost:5001/gitopscon/sm-pkg-repo@sha256:675088d231092ef11c63d29f308d517da7eb549e58829215c171276db5f0a898

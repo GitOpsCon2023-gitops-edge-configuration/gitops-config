@@ -1,0 +1,13 @@
+---
+domain: corp.com
+package_repository:
+  image: localhost:5001/gitopscon/lg-app-packages:0.0.1
+  name: lg-app-repository
+  namespace: lg-app-install
+  packages:
+    - name: hello-app
+      versions:
+        - 1.0.0
+    - name: giant-app
+      versions:
+        - 3.5.1

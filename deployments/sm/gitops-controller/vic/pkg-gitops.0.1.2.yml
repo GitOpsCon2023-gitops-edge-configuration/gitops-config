@@ -1,0 +1,17 @@
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: sm-vic-pkg-gitops
+  namespace: default
+spec:
+  deploy:
+  - kapp: {}
+  fetch:
+  - git:
+      ref: origin/main
+      subPath: deployments/sm/pkg-installer/0.1.2/vic
+      url: https://github.com/GitOpsCon2023-gitops-edge-configuration/gitops-config
+  serviceAccountName: default-ns-sa
+  template:
+  - ytt: {}

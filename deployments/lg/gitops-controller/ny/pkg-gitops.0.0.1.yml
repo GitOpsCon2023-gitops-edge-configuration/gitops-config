@@ -1,0 +1,17 @@
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: lg-ny-pkg-gitops
+  namespace: default
+spec:
+  deploy:
+  - kapp: {}
+  fetch:
+  - git:
+      ref: origin/main
+      subPath: deployments/lg/pkg-installer/0.0.1/ny
+      url: https://github.com/GitOpsCon2023-gitops-edge-configuration/gitops-config
+  serviceAccountName: default-ns-sa
+  template:
+  - ytt: {}

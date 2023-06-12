@@ -1,0 +1,87 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: lg-giant-app.corp.com.0.5.4
+spec:
+  refName: lg-giant-app.corp.com
+  version: 0.5.4
+  releaseNotes: |
+    Initial release of the app package
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              default: giant-app
+            owner:
+              nullable: true
+              default: null
+        giantApp:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+              default: giant-app
+            message:
+              type: string
+              default: default
+            memRequest:
+              type: string
+              default: 128Mi
+            cpuRequest:
+              type: string
+              default: 500m
+            memLimit:
+              type: string
+              default: 256Mi
+            cpuLimit:
+              type: string
+              default: 1000m
+            ingress:
+              type: object
+              additionalProperties: false
+              description: Set hostname and domain to null to omit Ingress resource
+              properties:
+                hostname:
+                  nullable: true
+                  default: null
+                domain:
+                  nullable: true
+                  default: null
+                class:
+                  nullable: true
+                  default: null
+                secret:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    certificate:
+                      nullable: true
+                      default: null
+                    privateKey:
+                      nullable: true
+                      default: null
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: localhost:5001/gitopscon/lg-giant-app-bundle:0.5.4
+      template:
+      - ytt:
+          paths:
+          - config/
+          - overlay/
+          - values/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}

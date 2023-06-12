@@ -1,0 +1,37 @@
+#@ load("@ytt:data", "data")
+
+#@ def get_package_spec(package):
+#@ if hasattr(package, 'spec'):
+#@   return package.spec
+#@ end
+#@ return data.values.package_repository.packageSpec
+#@ end
+
+#@ for/end package in data.values.package_repository.packages:
+---
+apiVersion: package.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: #@ str(package.name) + "." + str(domain) + "." + str(package.version)
+spec:
+  publicName: #@ package.name + "." + str(domain)
+  version: #@ package.version
+  template:
+    spec:
+
+      fetch:
+        - imgpkgBundle:
+            image: #@ data.values.registry + "/" + data.values.bundleName + ":" + str(package.version)
+      template:
+        - ytt:
+            ignoreUnknownComments: true
+            paths:
+              - "config/"
+              - "overlay/"
+              - "values/"
+        - kbld:
+            paths:
+              - "-"
+              - .imgpkg/images.yml
+      deploy:
+        - kapp: {}

@@ -1,0 +1,10 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: lg-hello-app.corp.com
+spec:
+  displayName: hello-app App
+  longDescription: hello-app app for demoing
+  shortDescription: hello-app app for deployment to Kubernetes
+  categories:
+  - demo
