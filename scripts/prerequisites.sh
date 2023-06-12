@@ -3,7 +3,7 @@
 ## 1. Authenticate docker to the image registry you want to use (see Kind option below)
 ## 2. Set kube context to the Kubernetes cluster you want to use (see Kind option below)
 ## 3. Install kapp-controller to the cluster (see kapp-controller instruction below)
-## 4. Install Carvel CLIs
+## 4. Install Carvel CLIs and kctrl CLI
 ## 5. Install demorunner (https://github.com/mgbrodi/demorunner)
 
 ###### You can run this script to satisfy
@@ -19,10 +19,8 @@ else
     echo "ERROR: Please install all Carvel CLIs"
 fi
 
-if ! command -v vendir &> /dev/null || ! command -v vendir &> /dev/null; then echo "Please install all Carvel CLIs"; fi
-if ! command -v kbld &> /dev/null; then echo "vendir not installed - please install all Carvel CLIs"; fi
-if ! command -v ytt &> /dev/null; then echo "vendir not installed - please install all Carvel CLIs"; fi
-if ! command -v vendir &> /dev/null; then echo "vendir not installed - please install all Carvel CLIs"; fi
+# kctrl CLI
+if ! command -v kctrl &> /dev/null; then echo "Please install kctrl CLI"; fi
 
 # Demorunner
 if [ -x scripts/demorunner.sh ]; then
