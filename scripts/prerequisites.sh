@@ -8,6 +8,20 @@
 
 ###### You can run this script to satisfy
 
+if [ ! -d "~/demorunner" ] 
+  echo "ERROR: Please create the directory: ~/demorunner" 
+  echo "add a file named set-env-packaging.sh in ~/demorunner"
+  echo "with:"
+  echo "cat <<EOF"
+  echo "#!/bin/sh"
+  echo "export DEMO_DELAY=0"
+  echo "export MY_REG=# CUSTOMIZE THIS"
+  echo "export EDGE_REG=# CUSTOMIZE THIS"
+  echo "EOF"
+fi
+
+
+
 # Carvel CLIs
 if  command -v vendir &> /dev/null &&
     command -v kbld &> /dev/null &&
@@ -44,8 +58,7 @@ else
     && ./kind-with-registry.sh \
     && kubectl cluster-info --context kind-kind \
     && rm kind-with-registry.sh
-   export MY_REG=localhost:5001/gitopscon
-   export EDGE_REG=localhost:5001/gitopscon-edge
+    source ~/demorunner/set-env-packaging.sh 
 
   # kapp-controller installation and RBAC configuration:
   kapp deploy -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml

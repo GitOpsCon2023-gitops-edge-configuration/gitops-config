@@ -16,13 +16,14 @@ echo
 echo "Setting env vars"
 # unset APP_NAME VERSION CLASSES DEPLOYMENT REPO_VERSION MY_REG
 # To override, export env vars with desired values and re-run demo script
-source $DEMO_HOME/scripts/set-app-env.sh "${APP_NAME:=hello-app}" "${CLASSES:=lg}" "${DEPLOYMENT:=ny}" "${VERSION:=1.0.0}" "${REPO_VERSION:=0.0.1}" "${MY_REG:=localhost:5001/gitopscon}"
+source ~/demorunner/set-env-packaging.sh 
+source $DEMO_HOME/scripts/set-app-env.sh "${APP_NAME:=hello-app}" "${CLASSES:=lg}" "${DEPLOYMENT:=ny}" "${VERSION:=1.0.0}" "${REPO_VERSION:=0.0.1}" "${MY_REG:=marygabry1508} ${EDGE_REG:-marygabry1508-edge}"
 
 # TO-DO: Update registry and REPO_VERSION in files. Do this in set env actually
 
 echo "Cloning source code"
 mkdir -p $TEMP/src/$APP_NAME && rm -rf $TEMP/src/$APP_NAME && git clone $APP_REPO $TEMP/src/$APP_NAME
-#sed -i '' "s|localhost:5001/gitopscon|$MY_REG|g" $APP_HOME/$APP_NAME/kbld.yml
+#sed -i '' "s|marygabry1508|$MY_REG|g" $APP_HOME/$APP_NAME/kbld.yml
 myDest=$MY_REG/$APP_NAME yq e -i '.destinations[0].newImage = env(myDest)' $APP_HOME/$APP_NAME/kbld.yml
 
 clear

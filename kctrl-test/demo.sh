@@ -1,6 +1,6 @@
 #_ECHO_OFF
 export DEMO_DELAY=0
-source kctrl-test/set-env.sh
+source kctrl-test/set-env-hello-app.sh
 clear
 #_ECHO_ON
 #_ECHO_# Based on demo: https://asciinema.org/a/515349

@@ -1,0 +1,14 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+#! build image
+sources:
+  - image: marygabry1508/hello-app
+    path: ../../temp/src/hello-app
+    pack:
+      build:
+        builder: paketobuildpacks/builder
+#! publish (push) image
+destinations:
+  - image: marygabry1508/hello-app
+    newImage: marygabry1508/hello-app
+    tags: [latest]
